@@ -1,6 +1,5 @@
 const endPoint = "http://localhost:3000/rooms"
-const listEl = document.getElementById('list')
-const ownerTitle = document.getElementById('owner')
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
