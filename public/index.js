@@ -2,6 +2,11 @@ const endpoint ="http://localhost:3000/api/v1/journals"
 
 document.addEventListener("DOMContentLoaded", () => {
     getJournal()
+
+    const createJournalForm = document.querySelector("#create-journal-form")
+
+    createJournalForm.addEventListener("submit", (e) => createFormHandler(e)
+    )
 })
 
 function getJournal() {
@@ -23,4 +28,13 @@ function getJournal() {
 
         })
     })
+}
+
+function createFormHandler(e) {
+    e.preventDefault()
+    const titleInput = document.querySelector('#input-title').value
+    const descriptionInput = document.querySelector('#input-description').value
+    const imgInput = document.querySelector('#input-url').value
+    const categoryId = parseInt(document.querySelector('#categories').value)
+    postFetch()
 }
