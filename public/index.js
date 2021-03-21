@@ -14,7 +14,14 @@ function getJournal() {
     .then(res => res.json())
     .then(journal => {
         journal.data.forEach(journal => {
-            const journalMarkUp = `
+   render(journal)
+
+        })
+    })
+}
+
+function render(journal) {
+    const journalMarkUp = `
             <div data-id = ${journal.id}>
                 <p> ${journal.attributes.category.name} </p>
                 <h1> ${journal.attributes.title} </h1>
@@ -25,9 +32,6 @@ function getJournal() {
             <br><br>
             `
     document.querySelector("#journal-container").innerHTML += journalMarkUp
-
-        })
-    })
 }
 
 function createFormHandler(e) {
@@ -49,18 +53,9 @@ function postFetch(title, description, image_url, category_id) {
     })
     .then(res => res.json())
     .then(journal => {
+        console.log(journal);
         const journalData = journal.data
         // render JSON response
-        const journalMarkup = `
-        <div data-id = ${journal.id}>
-            <p> ${journalData.attributes.category.name} </p>
-            <h1> ${journalData.attributes.title} </h1>
-            <h3> ${journalData.attributes.description} </h3>
-            <img src = ${journalData.attributes.image_url} height="200" width="250"><br>
-            <button data-id = ${journal.id}>Edit </button>
-        </div>
-        <br><br>`;
-
-        document.querySelector("#journal-container").innerHTML += journalMarkup
+        render(journalData)
     })
 }
