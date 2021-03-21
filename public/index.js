@@ -1,4 +1,4 @@
-const endpoint ="http://localhost:3000/api/v1/journals" 
+const endPoint ="http://localhost:3000/api/v1/journals" 
 
 document.addEventListener("DOMContentLoaded", () => {
     getJournal()
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function getJournal() {
-    fetch(endpoint)
+    fetch(endPoint)
     .then(res => res.json())
     .then(journal => {
         journal.data.forEach(journal => {
@@ -19,7 +19,7 @@ function getJournal() {
                 <p> ${journal.attributes.category.name} </p>
                 <h1> ${journal.attributes.title} </h1>
                 <h3> ${journal.attributes.description} </h3>
-                <img src = ${journal.attributes.image_url}>
+                <img src = ${journal.attributes.image_url} height="200" width="250" ><br>
                 <button data-id = ${journal.id}>Edit </button>
             </div>
             <br><br>
@@ -36,5 +36,31 @@ function createFormHandler(e) {
     const descriptionInput = document.querySelector('#input-description').value
     const imgInput = document.querySelector('#input-url').value
     const categoryId = parseInt(document.querySelector('#categories').value)
-    postFetch()
+    postFetch(titleInput, descriptionInput, imgInput, categoryId)
+}
+
+function postFetch(title, description, image_url, category_id) {
+    let bodyData = {title, description, image_url, category_id}
+
+    fetch(endPoint, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(bodyData)
+    })
+    .then(res => res.json())
+    .then(journal => {
+        const journalData = journal.data
+        // render JSON response
+        const journalMarkup = `
+        <div data-id = ${journal.id}>
+            <p> ${journalData.attributes.category.name} </p>
+            <h1> ${journalData.attributes.title} </h1>
+            <h3> ${journalData.attributes.description} </h3>
+            <img src = ${journalData.attributes.image_url} height="200" width="250"><br>
+            <button data-id = ${journal.id}>Edit </button>
+        </div>
+        <br><br>`;
+
+        document.querySelector("#journal-container").innerHTML += journalMarkup
+    })
 }
