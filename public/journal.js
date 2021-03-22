@@ -15,7 +15,7 @@ class Journal {
                     <h1> ${this.title} </h1>
                     <h3> ${this.description} </h3>
                     <img src = ${this.image_url} height="200" width="250" ><br>
-                    <button data-id = ${this.id}>Edit </button>
+                    <button data-id = ${this.id} type=button class = "delete-btn">delete </button>
                 </div>
                 <br><br>
                 `

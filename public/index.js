@@ -20,7 +20,19 @@ function getJournal() {
             document.querySelector("#journal-container").innerHTML += newJournal.renderJournalCard()
 
         })
+        document
+        .querySelectorAll('.delete-btn')
+        .forEach((btn) => btn.addEventListener('click', deleteJournal))
     })
+}
+
+function deleteJournal(e) {
+    const { id } = e.target.dataset.id;
+    fetch (`http://localhost:3000/api/v1/journals/${id}`, {
+        method: 'DELETE'
+    })
+    .then((res) => res.json())
+    .then((date) => e.target.remove())
 }
 
 function createFormHandler(e) {
@@ -42,6 +54,7 @@ function postFetch(title, description, image_url, category_id) {
     })
     .then(res => res.json())
     .then(journal => {
+        console.log(journal);
         // render JSON response
         const journalData = journal.data
 
